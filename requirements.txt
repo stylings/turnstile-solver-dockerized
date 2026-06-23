@@ -1,5 +1,2 @@
-quart
-asyncio
-argparse
-patchright
-camoufox[geoip]
+quart==0.20.0
+camoufox[geoip]==0.4.11

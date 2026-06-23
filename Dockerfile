@@ -10,12 +10,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # camoufox fetch is slow - cache it before app code changes
-RUN pip install --no-cache-dir camoufox[geoip]
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 RUN python -m camoufox fetch
-RUN pip install --no-cache-dir quart patchright
 
 COPY api_solver.py .
 
 EXPOSE 5000
 
-CMD ["python", "api_solver.py", "--browser_type", "camoufox", "--headless", "True", "--host", "0.0.0.0", "--port", "5000", "--debug", "True"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD curl --fail --silent http://localhost:5000/health || exit 1
+
+CMD ["python", "api_solver.py", "--headless", "--host", "0.0.0.0", "--port", "5000"]
