@@ -8,42 +8,43 @@ One-command Cloudflare Turnstile solver using camoufox (headless). Forked from [
 docker compose up -d
 ```
 
-This pulls `ghcr.io/stylings/turnstile-solver-dockerized:latest`.
-Use `docker compose up -d --build` to build the image locally instead.
-
-Published images are tagged as `latest` and with the first 7 characters of
-their Git commit, for example:
-
-```text
-ghcr.io/stylings/turnstile-solver-dockerized:latest
-ghcr.io/stylings/turnstile-solver-dockerized:2fdb03d
-```
+[Published images](https://github.com/stylings/turnstile-solver-dockerized/pkgs/container/turnstile-solver-dockerized)
 
 ## API
 
 **Request a solve:**
+
 ```
 GET /turnstile?url=https://example.com&sitekey=0x4AAAAAAA...
 ```
+
 → `{"task_id": "uuid"}`
 
 **Get the token:**
+
 ```
 GET /result?id=uuid
 ```
+
 → `{"value": "0.xxx...", "elapsed_time": 3.2}`
+
+**Health check:**
+
+```
+GET /health
+```
+
+→ `{"status": "ok"}`
 
 ## CLI args
 
 Override in `docker-compose.yml` CMD or `Dockerfile`:
 
-| Arg | Default | Description |
-|-----|---------|-------------|
-| `--headless` | enabled | Headless mode (use `--no-headless` to disable) |
-| `--thread` | `1` | Parallel browser instances |
-| `--debug` | `False` | Verbose solve logs |
-| `--host` | `0.0.0.0` | Bind address |
-| `--port` | `5000` | Listen port |
-| `--proxy` | `False` | Load proxies from `proxies.txt` |
-
-Health check: `GET /health`
+| Arg          | Default   | Description                                    |
+| ------------ | --------- | ---------------------------------------------- |
+| `--headless` | enabled   | Headless mode (use `--no-headless` to disable) |
+| `--thread`   | `1`       | Parallel browser instances                     |
+| `--debug`    | `False`   | Verbose solve logs                             |
+| `--host`     | `0.0.0.0` | Bind address                                   |
+| `--port`     | `5000`    | Listen port                                    |
+| `--proxy`    | `False`   | Load proxies from `proxies.txt`                |
