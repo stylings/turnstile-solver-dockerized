@@ -264,10 +264,7 @@ class TurnstileAPIServer:
 
     async def health(self):
         """Return basic service health."""
-        return jsonify({
-            "status": "ok",
-            "available_browsers": self.browser_pool.qsize(),
-        })
+        return jsonify({"status": "ok"})
 
     @staticmethod
     async def index():
