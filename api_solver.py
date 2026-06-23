@@ -8,6 +8,8 @@ import asyncio
 import argparse
 from quart import Quart, request, jsonify
 from camoufox.async_api import AsyncCamoufox
+from hypercorn.asyncio import serve
+from hypercorn.config import Config
 
 
 COLORS = {
@@ -330,4 +332,6 @@ def create_app(headless: bool, debug: bool, thread: int, proxy_support: bool) ->
 if __name__ == '__main__':
     args = parse_args()
     app = create_app(headless=args.headless, debug=args.debug, thread=args.thread, proxy_support=args.proxy)
-    app.run(host=args.host, port=int(args.port))
+    config = Config()
+    config.bind = [f"{args.host}:{args.port}"]
+    asyncio.run(serve(app, config))
