@@ -5,6 +5,12 @@ One-command Cloudflare Turnstile solver using camoufox (headless). Forked from [
 ## Usage
 
 ```bash
+docker run -d -p 5000:5000 ghcr.io/stylings/turnstile-solver-dockerized
+```
+
+Or with Docker Compose:
+
+```bash
 docker compose up -d
 ```
 
