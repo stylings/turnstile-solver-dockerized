@@ -35,4 +35,3 @@ Override in `docker-compose.yml` CMD or `Dockerfile`:
 | `--host` | `0.0.0.0` | Bind address |
 | `--port` | `5000` | Listen port |
 | `--proxy` | `False` | Load proxies from `proxies.txt` |
-```
