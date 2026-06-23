@@ -5,7 +5,18 @@ One-command Cloudflare Turnstile solver using camoufox (headless). Forked from [
 ## Usage
 
 ```bash
-docker compose up -d --build
+docker compose up -d
+```
+
+This pulls `ghcr.io/stylings/turnstile-solver-dockerized:latest`.
+Use `docker compose up -d --build` to build the image locally instead.
+
+Published images are tagged as `latest` and with the first 7 characters of
+their Git commit, for example:
+
+```text
+ghcr.io/stylings/turnstile-solver-dockerized:latest
+ghcr.io/stylings/turnstile-solver-dockerized:2fdb03d
 ```
 
 ## API

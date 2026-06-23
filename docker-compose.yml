@@ -1,5 +1,6 @@
 services:
   solver:
+    image: ghcr.io/stylings/turnstile-solver-dockerized:latest
     build: .
     ports:
       - "5000:5000"
