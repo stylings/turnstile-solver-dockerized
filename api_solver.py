@@ -111,7 +111,7 @@ class TurnstileAPIServer:
 
     async def _initialize_browser(self) -> None:
         """Initialize the browser and create the page pool."""
-        camoufox = AsyncCamoufox(headless=self.headless)
+        camoufox = AsyncCamoufox(headless=self.headless, os="linux")
 
         for _ in range(self.thread_count):
             browser = await camoufox.start()

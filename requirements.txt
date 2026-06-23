@@ -1,2 +1,2 @@
 quart==0.20.0
-camoufox[geoip]==0.4.11
+camoufox==0.4.11
