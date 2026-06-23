@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   publish:
+    if: github.repository == 'stylings/turnstile-solver-dockerized'
     runs-on: ubuntu-latest
 
     steps:
