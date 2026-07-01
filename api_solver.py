@@ -81,7 +81,7 @@ class TurnstileAPIServer:
     </html>
     """
 
-    def __init__(self, headless: bool, debug: bool, thread: int, proxy_support: bool):
+    def __init__(self, headless, debug: bool, thread: int, proxy_support: bool):
         self.app = Quart(__name__)
         self.debug = debug
         self.results = {}
@@ -312,7 +312,7 @@ def parse_args():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="Turnstile API Server")
 
-    parser.add_argument('--headless', action=argparse.BooleanOptionalAction, default=False, help='Run Camoufox in headless mode (default: False)')
+    parser.add_argument('--headless', choices=['true', 'false', 'virtual'], default='false', help="Headless mode: 'true' (real headless, easily flagged by Turnstile), 'false' (headed), or 'virtual' (Xvfb, recommended for headless servers) (default: false)")
     parser.add_argument('--debug', action=argparse.BooleanOptionalAction, default=False, help='Enable or disable debug mode for additional logging and troubleshooting information (default: False)')
     parser.add_argument('--thread', type=int, default=1, help='Set the number of browser threads to use for multi-threaded mode. Increasing this will speed up execution but requires more resources (default: 1)')
     parser.add_argument('--proxy', action=argparse.BooleanOptionalAction, default=False, help='Enable proxy support for the solver (Default: False)')
@@ -321,14 +321,15 @@ def parse_args():
     return parser.parse_args()
 
 
-def create_app(headless: bool, debug: bool, thread: int, proxy_support: bool) -> Quart:
+def create_app(headless, debug: bool, thread: int, proxy_support: bool) -> Quart:
     server = TurnstileAPIServer(headless=headless, debug=debug, thread=thread, proxy_support=proxy_support)
     return server.app
 
 
 if __name__ == '__main__':
     args = parse_args()
-    app = create_app(headless=args.headless, debug=args.debug, thread=args.thread, proxy_support=args.proxy)
+    headless = args.headless if args.headless == 'virtual' else args.headless == 'true'
+    app = create_app(headless=headless, debug=args.debug, thread=args.thread, proxy_support=args.proxy)
     config = Config()
     config.bind = [f"{args.host}:{args.port}"]
     asyncio.run(serve(app, config))

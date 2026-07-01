@@ -48,7 +48,7 @@ Override in `docker-compose.yml` CMD or `Dockerfile`:
 
 | Arg          | Default   | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
-| `--headless` | enabled   | Headless mode (use `--no-headless` to disable) |
+| `--headless` | `virtual` | `true`, `false`, or `virtual` (Xvfb; recommended for headless servers, `true` gets detected by Turnstile) |
 | `--thread`   | `1`       | Parallel browser instances                     |
 | `--debug`    | `False`   | Verbose solve logs                             |
 | `--host`     | `0.0.0.0` | Bind address                                   |

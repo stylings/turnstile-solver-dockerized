@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgtk-3-0 libasound2 libdbus-glib-1-2 libx11-xcb1 \
     libxcomposite1 libxdamage1 libxrandr2 libpango-1.0-0 \
     libcairo2 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 \
+    xvfb \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -32,4 +33,4 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
     CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=3)"]
 
-CMD ["python", "api_solver.py", "--headless", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["python", "api_solver.py", "--headless", "virtual", "--host", "0.0.0.0", "--port", "5000"]
